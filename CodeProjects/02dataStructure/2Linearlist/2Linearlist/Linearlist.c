@@ -78,13 +78,25 @@ bool ListDelete(SeqList* L, int i, int* e) {
 	if (i<1 || i>L->length)
 		return false;
 
-	e = L->data[i - 1];
+	*e = L->data[i - 1];
 	for (int j = i; j < L->length; j++)
 		L->data[j - 1] = L->data[j];
 
 	L->length--;
 	return true;
 }
+
+
+// 查找操作
+	// 按值查找
+int LocateElem(SeqList* L, int e) {
+	for (int i = 0; i < L->length; i++)
+		if (L->data[i] == e)
+			return i+1;
+	return 0;
+}
+
+
 
 //增加空间大小
 void IncreaseSize(SeqList* L, int len) {
@@ -127,6 +139,21 @@ int main()
 	IncreaseSize(&L, 5);
 	printf("增加空间成功\n");
 	printf("MaxSize_after：%d\n", L.MaxSize);
+
+	int e = 0;
+	ListDelete(&L, 1, &e);
+	printf("删除成功，返回值为%d\n", e);
+
+	int i;
+	i=LocateElem(&L, 2);
+	if (i != 0)
+		printf("查找成功，位序为%d\n", i);
+	else
+		printf("未找到");
+
+
+
+
 	
 
 
