@@ -292,13 +292,65 @@ bool Delete_Same(SeqList* L) {
 
 }
 
+// 王道223课后题07
+bool MergeList(SeqList* A, SeqList* B, SeqList* MergeList) {
+	//冒泡解法
+
+	if (A->length == 0 || A->length == 0)
+		return false;
+	int k = 0; //MergeList索引
+	for (int i = 0; i < A->length; i++) {
+		MergeList->data[k] = A->data[i];
+		k++;
+	}
+
+	for (int i = 0; i < B->length; i++) {
+		MergeList->data[k] = B->data[i];
+		k++;
+	}
+
+	MergeList->length = A->length + B->length;
+
+	for (int i = 0; i < MergeList->length - 1; i++)//总轮数
+	{
+		int j;
+		for (j = 0; j < MergeList->length - i - 1; j++) {
+			if (MergeList->data[j] > MergeList->data[j + 1]) {
+				int temp = MergeList->data[j];
+				MergeList->data[j] = MergeList->data[j + 1];
+				MergeList->data[j + 1] = temp;
+			}
+		}
+	}
+	return true;
+}
+
+	//课本实现
+bool Merge(SeqList A, SeqList B, SeqList* C) { // 不改变A B的值
+	if (A.length + B.length > C->MaxSize)
+		return false;
+	int i = 0, j = 0, k = 0;
+	while (i < A.length && j < B.length) {
+		if (A.data[i] < B.data[j]) {
+			C->data[k] = A.data[i];
+			k++;
+			i++;
+		}
+		else
+			C->data[k++] = B.data[j++];
+
+	}
+	while(i<A.length)
+		C->data[k++]= A.data[i++];
+
+	while (j < B.length)
+		C->data[k++] = B.data[j++];
+	C->length = k;
+	return true;
+}
 
 
-
-
-
-
-
+// 王道223课后题08
 
 
 
@@ -377,6 +429,40 @@ int main()
 	//printf("06返回%d 表中数据为：", d);
 	//displayList(&L);
 
+
+
+
+	//06
+	//A
+	SeqList A = { NULL,0,0 };
+	InitList(&A);
+	ListInsert2(&A, 1, 2);
+	ListInsert2(&A, 2, 3);
+	ListInsert2(&A, 3, 4);
+	ListInsert2(&A, 4, 6);
+	ListInsert2(&A, 5, 9);
+	printf("A表中数据为：");
+	displayList(&A);
+
+
+	//B
+	SeqList B = { NULL,0,0 };
+	InitList(&B);
+	ListInsert2(&B, 1, 1);
+	ListInsert2(&B, 2, 2);
+	ListInsert2(&B, 3, 8);
+	ListInsert2(&B, 4, 10);
+
+	printf("B表中数据为：");
+	displayList(&B);
+
+	//MergeList
+	SeqList List = { NULL,0,0 };
+	InitList(&List);
+
+	MergeList(&A, &B, &List);
+	printf("List表中数据为：");
+	displayList(&List);
 	return 0;
 }
 
