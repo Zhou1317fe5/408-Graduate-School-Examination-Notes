@@ -7,7 +7,6 @@
 /*顺序表*/
 
 // 定义动态表
-#include <stdlib.h>
 #define InitSize 800
 typedef struct {
 	int* data;
@@ -326,35 +325,129 @@ bool MergeList(SeqList* A, SeqList* B, SeqList* MergeList) {
 }
 
 	//课本实现
-bool Merge(SeqList A, SeqList B, SeqList* C) { // 不改变A B的值
+//bool Merge(SeqList A, SeqList B, SeqList* C) { // 不改变A B的值
+//	if (A.length + B.length > C->MaxSize)
+//		return false;
+//	int i = 0, j = 0, k = 0;
+//	while (i < A.length && j < B.length) {
+//		if (A.data[i] < B.data[j]) {
+//			C->data[k] = A.data[i];
+//			k++;
+//			i++;
+//		}
+//		else
+//			C->data[k++] = B.data[j++];
+//
+//	}
+//	while(i<A.length)
+//		C->data[k++]= A.data[i++];
+//
+//	while (j < B.length)
+//		C->data[k++] = B.data[j++];
+//	C->length = k;
+//	return true;
+//}
+
+
+bool Merge(SeqList A, SeqList B, SeqList* C) {
 	if (A.length + B.length > C->MaxSize)
 		return false;
-	int i = 0, j = 0, k = 0;
+	int i = 0,j = 0, k = 0;
 	while (i < A.length && j < B.length) {
-		if (A.data[i] < B.data[j]) {
-			C->data[k] = A.data[i];
-			k++;
-			i++;
-		}
+		if (A.data[i] < B.data[j])
+			C->data[k++] = A.data[i++];
 		else
 			C->data[k++] = B.data[j++];
-
 	}
-	while(i<A.length)
-		C->data[k++]= A.data[i++];
 
-	while (j < B.length)
-		C->data[k++] = B.data[j++];
+	while(i<A.length) // A剩余
+		C->data[k++] = A.data[i++];
+
+	while (j < B.length) // B剩余
+		C->data[k++] = A.data[j++];
+
 	C->length = k;
 	return true;
 }
 
 
+
+
 // 王道223课后题08
 
+//课本实现
+void Reverse(int A[], int left, int right, int arraySize) {
+	if (left >= right || right >= arraySize)
+		return false;
+	int mid = (left + right) / 2;
+	for (int i = 0; i < mid; i++)
+	{
+		int temp = A[left + i];
+		A[left + i] = A[right - i];
+		A[right - i]=temp;
+	}
 
+}
 
+void Exchange(int A[], int m, int n, int arraySize) {
+	Reverse(A, 0, m + n - 1, arraySize);//n n-1 n-2 ··· 2 1 m m-1 m-2 ··· 2 1
+	Reverse(A, 0, n - 1, arraySize);//1 2 ···n-1 n      m m-1···2 1
+	Reverse(A, n, m + n - 1, arraySize);//1 2 ···n-1 n      1 2 ··· m-1 m
+}
 
+// 王道223课后题09
+bool Search(SeqList* L, int x) {
+	if (L->length == 0)
+		return false;
+	int  i = 0;
+	for (i; i < L->length; i++) { 
+		// 找到，交换值
+		if (L->data[i] == x) {
+			L->data[i] = L->data[i + 1];
+			L->data[i + 1] = x;
+			break;
+		}
+		// 未找到 返回第一个大余x的下标
+		if (L->data[i] > x) {
+			// 加上元素x后长度大于MaxSize,返回
+			if (L->length + 1 > L->MaxSize)
+				return false;
+			// 插入元素
+			for (int j = L->length; j > i; j--) {
+				L->data[j] = L->data[j - 1];
+			}
+			L->data[i] = x;
+			L->length += 1;
+			break;
+		}
+	}
+}
+
+// 课本实现
+void SearchExchangeInsert(SeqList* L, int x) {
+	int low = 0, high = L->length - 1, mid = 0;
+	while (low < high) {
+		mid = (low + high) / 2;
+		if (L->data[mid] == x)
+			break;
+		else if (L->data[mid] > x) high = mid - 1;
+		else low = mid + 1;
+	}
+
+	if (L->data[mid] == x && mid != L->length - 1) {
+		int temp = L->data[mid];
+		L->data[mid] = L->data[mid + 1];
+		L->data[mid] = temp;
+	}
+
+	if (low > high) {
+		int i = 0;
+		for(i= L->length - 1;i>high;i--)
+			L->data[i+1] = L->data[i];
+		L->data[i + 1] = x;
+	}
+	
+}
 
 
 
@@ -370,11 +463,11 @@ int main()
 	ListInsert2(&L, 3, 4);
 	ListInsert2(&L, 4, 6);
 	ListInsert2(&L, 5, 9);
-	ListInsert2(&L, 6, 9);
+	ListInsert2(&L, 6, 10);
 	ListInsert2(&L, 7, 11);
 	ListInsert2(&L, 8, 12);
 	printf("插入成功\n");
-	printf("表中数据为：");
+	printf("L表中数据为：");
 	displayList(&L);
 	//printf("length：%d\n", L.length);
 	//printf("MaxSize_before：%d\n", L.MaxSize);
@@ -434,35 +527,53 @@ int main()
 
 	//06
 	//A
-	SeqList A = { NULL,0,0 };
-	InitList(&A);
-	ListInsert2(&A, 1, 2);
-	ListInsert2(&A, 2, 3);
-	ListInsert2(&A, 3, 4);
-	ListInsert2(&A, 4, 6);
-	ListInsert2(&A, 5, 9);
-	printf("A表中数据为：");
-	displayList(&A);
+	//SeqList A = { NULL,0,0 };
+	//InitList(&A);
+	//ListInsert2(&A, 1, 2);
+	//ListInsert2(&A, 2, 3);
+	//ListInsert2(&A, 3, 4);
+	//ListInsert2(&A, 4, 6);
+	//ListInsert2(&A, 5, 9);
+	//printf("A表中数据为：");
+	//displayList(&A);
 
 
-	//B
-	SeqList B = { NULL,0,0 };
-	InitList(&B);
-	ListInsert2(&B, 1, 1);
-	ListInsert2(&B, 2, 2);
-	ListInsert2(&B, 3, 8);
-	ListInsert2(&B, 4, 10);
+	////B
+	//SeqList B = { NULL,0,0 };
+	//InitList(&B);
+	//ListInsert2(&B, 1, 1);
+	//ListInsert2(&B, 2, 2);
+	//ListInsert2(&B, 3, 8);
+	//ListInsert2(&B, 4, 10);
 
-	printf("B表中数据为：");
-	displayList(&B);
+	//printf("B表中数据为：");
+	//displayList(&B);
 
-	//MergeList
-	SeqList List = { NULL,0,0 };
-	InitList(&List);
+	////MergeList
+	//SeqList List = { NULL,0,0 };
+	//InitList(&List);
 
-	MergeList(&A, &B, &List);
-	printf("List表中数据为：");
-	displayList(&List);
+	//MergeList(&A, &B, &List);
+	//printf("List表中数据为：");
+	//displayList(&List);
+
+
+
+	//09
+	int x = 5;
+	Search(&L, x);
+	//SearchExchangeInsert(&L,x);
+	printf("插入数字为%d,L表中数据为：",x);
+	displayList(&L);
+
+
+
+
+
+
+
+
+
 	return 0;
 }
 

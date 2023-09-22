@@ -1,3 +1,7 @@
 ﻿  Sequenatiallist.c
-D:\OneDrive\Obsidian\Obsidian Vault\Obsidian Study\408\CodeProjects\02dataStructure\220Sequenatiallist\220Sequenatiallist\Sequenatiallist.c(165): warning C4716: “DeleteElemX”: 必须返回一个值
+D:\OneDrive\Obsidian\Obsidian Vault\Obsidian Study\408\CodeProjects\02dataStructure\220Sequenatiallist\220Sequenatiallist\Sequenatiallist.c(20,24): warning C4013: “malloc”未定义；假设外部返回 int
+D:\OneDrive\Obsidian\Obsidian Vault\Obsidian Study\408\CodeProjects\02dataStructure\220Sequenatiallist\220Sequenatiallist\Sequenatiallist.c(112,6): warning C4013: “free”未定义；假设外部返回 int
+D:\OneDrive\Obsidian\Obsidian Vault\Obsidian Study\408\CodeProjects\02dataStructure\220Sequenatiallist\220Sequenatiallist\Sequenatiallist.c(381,15): warning C4098: “Reverse”:“void”函数返回值
+D:\OneDrive\Obsidian\Obsidian Vault\Obsidian Study\408\CodeProjects\02dataStructure\220Sequenatiallist\220Sequenatiallist\Sequenatiallist.c(164): warning C4716: “DeleteElemX”: 必须返回一个值
+D:\OneDrive\Obsidian\Obsidian Vault\Obsidian Study\408\CodeProjects\02dataStructure\220Sequenatiallist\220Sequenatiallist\Sequenatiallist.c(424): warning C4715: “Search”: 不是所有的控件路径都返回值
   220Sequenatiallist.vcxproj -> D:\OneDrive\Obsidian\Obsidian Vault\Obsidian Study\408\CodeProjects\02dataStructure\220Sequenatiallist\Debug\220Sequenatiallist.exe
