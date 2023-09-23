@@ -449,6 +449,191 @@ void SearchExchangeInsert(SeqList* L, int x) {
 	
 }
 
+// 王道223课后题10
+//课本实现
+/*有误
+* void Reverse2(int A[], int start,int end) { // start 和 end 为下标
+	int i, temp;
+	for (i = 0; i < (start+end) / 2; i++) {
+		temp = A[start+i];
+		A[start + i]=A[end -i];
+		A[end - i]=temp;
+	}
+}
+
+void Converse(int A[], int n, int p) {
+	Reverse2(A,0,n-1);
+	Reverse2(A,0,n-1-p);
+	Reverse2(A,n-p,n-1);
+}
+*/
+
+
+
+void Reverse2(int A[], int start, int end) { // start 和 end 为下标
+	int i, temp;
+	for (i = 0; i < (end-start+1) / 2; i++) {
+		temp = A[start + i];
+		A[start + i] = A[end - i];
+		A[end - i] = temp;
+	}
+}
+
+
+void Converse(int A[], int n, int p) {
+	Reverse2(A, 0, p - 1);
+	Reverse2(A, p, n - 1);
+	Reverse2(A, 0, n - 1);
+}
+
+
+
+// 王道223课后题11
+void Merge2(int* A[], int* B[], int *C[], int sizeA,int  sizeB)
+{
+	int i=0, j=0, k = 0;
+	while (i < sizeA && j < sizeB) {
+		if (A[i] > B[j])
+			C[k++] = B[j++];
+		else
+			C[k++] = A[i++];
+	}
+
+	while (i < sizeA) {//A剩余
+		C[k++] = A[i++];
+	}
+
+	while (j < sizeB) {
+		C[k++] = B[j++];
+	}
+}
+int find(int* A[], int* B[], int *C[], int sizeA, int  sizeB) {
+	Merge2(A, B, C, sizeA,   sizeB);
+	return C[(sizeA+ sizeB-1) / 2];
+
+}
+
+// 课本实现
+int M_Search(int A[], int B[], int n) 
+{
+	int lefta = 0, righta = n - 1, mida, leftb = 0, rightb = n - 1, midb;// 分别表示A B的首位 末尾 中位下标
+	while (lefta != righta || leftb != rightb)
+	{
+		mida = (lefta + righta) / 2;
+		midb = (leftb + rightb) / 2;
+		if (A[mida] == B[midb])
+			return A[mida];
+		if (A[mida] < B[midb])
+		{
+			if ((lefta + rightb) % 2 == 0)
+			{ //元素个数为奇数
+				lefta = mida;
+				rightb = midb;
+			}
+			else
+			{//元素个数为偶数
+				lefta = mida + 1;
+				rightb = midb;
+			}
+		}
+		else
+		{
+			if ((lefta + rightb) % 2 == 0)
+			{ //元素个数为奇数
+				righta = mida;
+				leftb = midb;
+			}
+			else
+			{//元素个数为偶数
+				righta = mida;
+				leftb = midb + 1;
+			}
+
+		}
+		return A[mida] < B[midb] ? A[mida] : B[midb];
+	}
+
+}
+
+
+// 王道223课后题12
+int Find_X(int A[],int n)
+{
+	for (int i = 0; i < n; i++) 
+	{
+		int count = 0;
+		for (int j = 0; j < n; j++)
+		{
+			
+			if (A[j] == A[i])
+				count++;
+		}
+		if (count > n / 2)
+			return A[i];
+	}
+	return -1;
+}
+
+//课本实现
+int Majority(int A[], int n)
+{
+	int i, c, count = 1;				//c用来保存候选主元素，count用来计数
+	c = A[0];							// 设置A[0]为候选主元素
+	for (i = 1; i < n; i++)				//查找候选主元素
+		if (A[i] == c)
+			count++;					// 对A中的候选主元素计数
+		else
+			if (count > 0)				// 处理不是候选主元素的情况
+				count--;
+			else						// 更换候选主元素，重新计数
+			{
+				c = A[i];
+				count = 1;
+			}
+	if (count > 0)
+		for (i = count = 0; i < n; i++)	//统计候选主元素的实际出现次数
+			if (A[i] == c)
+				count++;
+	if (count > n / 2)return c;			// 确认候选主元素
+	else return -1;						//不存在主元素
+}
+// 王道223课后题13
+int Find_MinPositive(int A[],int n)
+{
+	int neg, min, max; // 最大负数 第一段最小正数 最大正数
+	neg = A[0];
+	min = A[0];
+	max = A[0];
+
+	for (int i = 0; i < n; i++)
+	{
+		if (A[i]<0 && A[i]>neg)
+			neg = A[i];
+		if (A[i] > 0 && A[i] < min)
+			min = A[i];
+		if (A[i] > 0 && A[i] > max)
+			max = A[i];
+
+	}
+
+	if (min != 1)
+		return 1;
+	if (min == 1)
+		return max + 1;
+}
+
+
+
+// 王道223课后题14
+
+
+
+
+
+
+
+
+
 
 
 int main()
@@ -560,11 +745,79 @@ int main()
 
 
 	//09
-	int x = 5;
-	Search(&L, x);
+	//int x = 5;
+	//Search(&L, x);
 	//SearchExchangeInsert(&L,x);
-	printf("插入数字为%d,L表中数据为：",x);
-	displayList(&L);
+	//printf("插入数字为%d,L表中数据为：",x);
+	//displayList(&L);
+
+	//10
+	//int A[] = { 2,3,4,5,6,7,8 };
+	//printf("数组为：");
+	//for (int i = 0; i < 7; i++) {
+	//	printf("%d ", A[i]);
+	//}
+
+	//Converse(A,7,2);
+	//printf("循环左移后数组为：");
+	//for (int i = 0; i < 7; i++) {
+	//	printf("%d ", A[i]);
+	//}
+
+
+
+	//11
+	//int A[] = { 1,4,6,8,12,16 };
+	//int B[] = { 3,5,9,13,15,17 };
+	//int C[12] = {0,0};
+
+	//int sizeA = sizeof(A) / sizeof(A[0]);
+	//int sizeB = sizeof(B) / sizeof(B[0]);
+	//int ret = find(&A, &B, &C, sizeA, sizeB);
+	//printf("AB中位数为：%d\n", ret);
+
+	//printf("C数组为：");
+	//for (int i = 0; i < 12; i++) {
+	//	printf("%d ", C[i]);
+	//}
+
+
+	//课本实现
+	//int ret=M_Search(A, B, 6);
+	//printf("11ret=%d\n", ret);
+
+
+
+	//12
+	//int A[] = { 2,2,2,1,12, 2};
+	//int ret = Find_X(A, 6);
+	//printf("12 ret = %d\n", ret);
+
+
+	//13
+	int A[] = { 2,2,2,1,12, 2};
+
+
+	//14
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
 
 
 
