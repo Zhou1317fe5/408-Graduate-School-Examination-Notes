@@ -598,44 +598,72 @@ int Majority(int A[], int n)
 	else return -1;						//不存在主元素
 }
 // 王道223课后题13
-int Find_MinPositive(int A[],int n)
+//课本实现
+int findMissMin(int A[], int n)
 {
-	int neg, min, max; // 最大负数 第一段最小正数 最大正数
-	neg = A[0];
-	min = A[0];
-	max = A[0];
+	int* B = (int*)malloc(n * sizeof(int));
+	memset(B, 0, sizeof(int) * n);
 
 	for (int i = 0; i < n; i++)
 	{
-		if (A[i]<0 && A[i]>neg)
-			neg = A[i];
-		if (A[i] > 0 && A[i] < min)
-			min = A[i];
-		if (A[i] > 0 && A[i] > max)
-			max = A[i];
+		if (A[i] > 0 && A[i] <= n)
+			B[A[i]] = 1;
+	}
+	int i;
+	for (i = 1; i <= n; i++)
+		if (0 == B[i]) break;
+	return i;
+}
 
+// 王道223课后题14
+#include <math.h>
+int minDistance(int A[], int B[],int a,int b)
+{
+	//求AB最小
+	int mindistance = abs(A[0]-B[0]);
+	for (int i = 0; i < a; i++)
+	{
+		for (int j = 0; j < b; j++)
+			mindistance=abs(A[i] - B[j]) < mindistance ? abs(A[i] - B[j]) : mindistance;
 	}
 
-	if (min != 1)
-		return 1;
-	if (min == 1)
-		return max + 1;
+	return mindistance;
+}
+
+int findMinDistance(int A[], int B[],int C[], int a, int b,int c)
+{
+	int ab = minDistance(A, B, a, b);
+	int bc = minDistance(B, C, b, c);
+	int ca = minDistance(C, A, c, a);
+
+	return ab + bc + ca;
+}
+
+//课本实现
+#define INI_MAX 0x7fffffff
+int abs_(int a)
+{
+	if (a < 0) return -a;
+	else return a;
+}
+
+int findMinoTrip(int A[], int length_a, int B[], int length_b, int C[],int length_c)
+{
+	int i = 0, j=0, k = 0, D_min = INI_MAX, D;
+	while (i < length_a && j < length_b && k < length_c)
+	{
+		D = abs_(A[i] - B[j]) + abs_(B[j] - C[k]) + abs_(C[k] - A[i]);
+		if (D < D_min) D_min = D;
+		if (A[i] < B[j] && A[i] < C[k]) i++;
+		else if (B[j] < A[i] && B[j] < C[k]) j++;
+		else k++;
+	}
+
+	return D_min;
 }
 
 
-
-// 王道223课后题14
-
-
-
-
-
-
-
-
-
-
-
+// main()函数
 int main()
 {
 	// 顺序表
@@ -795,37 +823,20 @@ int main()
 
 
 	//13
-	int A[] = { 2,2,2,1,12, 2};
+	//int A[] = { 2,2,2,1,12, 2};
+	//printf("13 未出现的最小正整数为：%d\n", findMissMin(A, 6));
 
 
 	//14
+	int A[] = { -1,0,9};
+	int B[] = { -25,-10,10,11};
+	int C[] = { 2,9,17,30,41};
+	//int ret = findMinDistance(A,B,C,3,4,5);
+	//printf("14三元组最小距离为：%d\n", ret);
 
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
+	//课本实现
+	int ret = findMinoTrip(A,3,B,4,C,5);
+	printf("14三元组最小距离为：%d\n", ret);
 
 	return 0;
 }
