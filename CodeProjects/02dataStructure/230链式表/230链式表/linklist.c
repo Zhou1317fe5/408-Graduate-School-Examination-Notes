@@ -57,10 +57,10 @@ bool ListInsert2(LNode* L, int i, int e)
 		s->data = e;
 		return true;
 	}
+	//找到i-1个位置
 	LNode* p;
 	int j = 1; // 当前结点
 	p = L;
-	//找到i-1个位置
 	while (j < i - 1 && p != NULL)
 	{
 		j++;
@@ -167,9 +167,54 @@ bool ListDelete(LNode* L, int i, int e)
 
 }
 
+//删除指定结点p
+bool DeleteNode(LNode* p)
+{
+	if (p == NULL)
+		return false;
+	LNode* q = p->next;
+	p->data = q->data;
+	p->next = q->next;
+	free(q);
+	return true;
+}
 
+//按位查找（头结点）
+LNode* GetElem(LNode* L, int i)
+{
+	if (L == NULL)
+		return NULL;
+	LNode* p=L;
+	int j = 0;
+	while (p != NULL && j < i)
+	{
+		p = p->next;
+		j++;
+	}
+	return p;
 
+}
+//按值查找
+LNode* LocateElem(LNode* L, int e)
+{
+	LNode* p = L;
+	while (p != NULL && p->data != e)
+		p = p->next;
+	return p;
+}
 
+//求表长度
+int ListLength(LNode* L)
+{
+	int len = 0;
+	LNode* p = L;
+	while (p->next != NULL)
+	{
+		p = p->next;
+		len++;
+	}
+	return len;
+}
 
 
 int main()
