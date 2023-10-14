@@ -15,7 +15,10 @@
     </Filter>
   </ItemGroup>
   <ItemGroup>
-    <ClCompile Include="linklist.c">
+    <ClCompile Include="单链表.c">
+      <Filter>源文件</Filter>
+    </ClCompile>
+    <ClCompile Include="双链表.c">
       <Filter>源文件</Filter>
     </ClCompile>
   </ItemGroup>
