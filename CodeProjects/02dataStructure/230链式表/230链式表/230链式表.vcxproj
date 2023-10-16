@@ -141,7 +141,6 @@
   <ItemGroup>
     <ClCompile Include="单链表.c" />
     <ClCompile Include="双链表.c" />
-    <ClCompile Include="栈.c" />
   </ItemGroup>
   <Import Project="$(VCTargetsPath)\Microsoft.Cpp.targets" />
   <ImportGroup Label="ExtensionTargets">

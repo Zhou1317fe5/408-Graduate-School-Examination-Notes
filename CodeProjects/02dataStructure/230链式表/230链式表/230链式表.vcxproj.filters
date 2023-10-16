@@ -21,8 +21,5 @@
     <ClCompile Include="双链表.c">
       <Filter>源文件</Filter>
     </ClCompile>
-    <ClCompile Include="栈.c">
-      <Filter>源文件</Filter>
-    </ClCompile>
   </ItemGroup>
 </Project>
