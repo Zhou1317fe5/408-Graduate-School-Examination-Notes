@@ -29,7 +29,7 @@ bool QueueEmpty(SqQueue Q) {
 
 // 增
 bool EnQueue(SqQueue* Q, int x) {
-	if ((Q->rear+1)%MaxSize==Q->front) // 判断队满
+	if ((Q->rear + 1) % MaxSize == Q->front) // 判断队满
 		return false;
 	Q->data[Q->rear] = x;
 	Q->rear = (Q->rear + 1) % MaxSize;
@@ -65,7 +65,7 @@ typedef struct {
 	LinkNode* front, * rear;
 }LinkQueue;
 
-void InitQueue(LinkQueue *Q) {
+void InitQueue(LinkQueue* Q) {
 	Q->front = Q->rear = (LinkNode*)malloc(sizeof(LinkNode)); //建立头结点
 	Q->front->next = NULL;
 }
@@ -112,19 +112,19 @@ void EnQueue2(LinkQueue* Q, int x) {
 		Q->rear = s;
 	}
 	else {
-		Q->rear ->next= s;
+		Q->rear->next = s;
 		Q->rear = s;
 	}
 }
 //删(头结点)
-bool DeQueue(LinkQueue* Q, int *x) {
+bool DeQueue(LinkQueue* Q, int* x) {
 	if (Q->rear == Q->front)
 		return false;
 	LinkNode* p = Q->front->next;// 出队结点
 	*x = p->data;
 	Q->front->next = p->next;
 	if (Q->rear == p)
-		Q->front=Q->rear;
+		Q->front = Q->rear;
 	free(p);
 	return true;
 }

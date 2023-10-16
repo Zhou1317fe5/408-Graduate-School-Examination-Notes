@@ -21,8 +21,8 @@
   <PropertyGroup Label="Globals">
     <VCProjectVersion>16.0</VCProjectVersion>
     <Keyword>Win32Proj</Keyword>
-    <ProjectGuid>{fe7d4fd6-d5d4-4e65-a43a-852da539818b}</ProjectGuid>
-    <RootNamespace>队列和数组</RootNamespace>
+    <ProjectGuid>{df6bc8c3-d295-4f48-8e00-51aa3e3af427}</ProjectGuid>
+    <RootNamespace>My300栈队列数组</RootNamespace>
     <WindowsTargetPlatformVersion>10.0</WindowsTargetPlatformVersion>
   </PropertyGroup>
   <Import Project="$(VCTargetsPath)\Microsoft.Cpp.Default.props" />
