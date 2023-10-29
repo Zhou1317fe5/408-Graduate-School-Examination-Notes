@@ -59,13 +59,38 @@ bool SubString(String* Sub, String S, int pos, int len) {
 	if (pos + len - 1 > S.length)
 		return false;
 	
-	
-	for (int i = 0; i < len; i++) {
-		Sub->data[i] = S.data[i + pos];
-	}
+	for (int i = pos; i < pos+len; i++) 
+		Sub->data[i-pos+1] = S.data[i];
 	Sub->length = len;
+	return true;
 }
 //串联串
+
+// 定位操作
+int Index(String S, String T) {
+	if (S.length < T.length)
+		return 0;
+
+	
+	for (int i = 0; i < S.length; i++) {
+		String* Sub;
+		SubString(Sub, S, i + 1, T.length);
+		if (StrCompare(*Sub, T) == 0)
+			return i + 1;
+	}
+	return 0;
+}
+
+int Index2(String S, String T) {
+	int i = 1, n = S.length, m = T.length;
+	String* Sub;
+	while (i < n - m + 1) {
+		SubString(Sub, S, i, m);
+		if (StrCompare(*Sub, T) != 0) ++i;
+		else return i;
+	}
+	return 0;
+}
 
 //清空操作
 
