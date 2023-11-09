@@ -9,5 +9,10 @@ typedef struct BiTNode {
 	struct BiTNode* lchild, * rchild; // ×óÓÒº¢×ÓÖ¸Õë
 }BiTNode,*BiTree;
 
+<<<<<<< HEAD
+=======
+BiTNode* root = NULL;
+root = (BiTNode*)malloc(sizeof(BiTNode));
+>>>>>>> 5f4c2a4891d4531de7d6cffd16f1cb4e1fa9868e
 
 
